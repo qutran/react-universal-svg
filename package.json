@@ -1,0 +1,53 @@
+{
+  "name": "@kotolis/react-universal-svg",
+  "version": "0.0.1",
+  "description": "The flexible universal SVG component that renders with DOM and react-native (expo)",
+  "main": "lib/index.js",
+  "scripts": {
+    "prepare": "rm -rf lib && npm run build",
+    "build": "babel -d lib src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/kutran-dmitry/react-universal-svg.git"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "expo",
+    "primitives",
+    "svg"
+  ],
+  "author": "Dmitry Kutran <dmitrykutran@gmail.com> (https://github.com/kutran-dmitry)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kutran-dmitry/react-universal-svg/issues"
+  },
+  "homepage": "https://github.com/kutran-dmitry/react-universal-svg#readme",
+  "dependencies": {
+    "buffer": "^5.2.0",
+    "dompurify": "^1.0.7",
+    "events": "^3.0.0",
+    "object.omit": "^3.0.0",
+    "prop-types": "^15.6.2",
+    "react-primitives": "^0.6.0",
+    "react-scripts": "1.1.5",
+    "stream": "0.0.2",
+    "timers": "^0.1.1",
+    "xml2js": "^0.4.19"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
+  },
+  "peerDependencies": {
+    "react": "*"
+  }
+}
