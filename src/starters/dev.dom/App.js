@@ -6,5 +6,8 @@ Svg.addModules({
 });
 
 export default () => (
-  <Svg src="https://upload.wikimedia.org/wikipedia/commons/4/42/Sample-image.svg" style={{ color: 'red', width: 100 }} />
+  <React.Fragment>
+    <Svg src="mock" style={{ color: 'red', width: 100 }} />
+    <Svg src="https://upload.wikimedia.org/wikipedia/commons/4/42/Sample-image.svg" style={{ width: 100 }} />
+  </React.Fragment>
 );
