@@ -1,8 +1,9 @@
 {
   "name": "@kotolis/react-universal-svg",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "The flexible universal SVG component that renders with DOM and react-native (expo)",
   "main": "lib",
+  "types": "index.d.ts",
   "scripts": {
     "start:dom": "REACT_APP_ENV=development:dom react-scripts start",
     "start:native": "REACT_APP_ENV=development:native expo start",
