@@ -1,7 +1,7 @@
 {
   "name": "@kotolis/react-universal-svg",
   "version": "0.0.3",
-  "description": "The flexible unisversal SVG component that renders with DOM and react-native (expo)",
+  "description": "The flexible universal SVG component that renders with DOM and react-native (expo)",
   "main": "lib/index.js",
   "scripts": {
     "start:dom": "REACT_APP_ENV=development:dom react-scripts start",
@@ -9,7 +9,8 @@
     "start:native:ios": "REACT_APP_ENV=development:native expo start --ios",
     "start:native:android": "REACT_APP_ENV=development:native expo start --android",
     "build": "rm -rf lib && NODE_ENV=production babel --plugins transform-node-env-inline -d lib src --ignore src/starters",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
