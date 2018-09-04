@@ -55,6 +55,6 @@ export default class DevBase extends Component {
       );
     }
 
-    return <Component />;
+    return <Component {...this.props} />;
   }
 }
