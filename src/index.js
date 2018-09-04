@@ -1,4 +1,12 @@
-// import { Platform } from 'react-primitives'
+import React from 'react';
+import DevBase from './starters/dev.base';
 
-export default require('./svg.native').default;
-// export default ['android', 'ios'].indexOf(Platform.OS) >= 0 ? require('./svg.native').default : require('./svg.web').default;
+export default (() => {
+  if (process.env.REACT_APP_ENV === 'development:dom') {
+    return import('./starters/dev.dom');
+  }
+
+  if (process.env.REACT_APP_ENV === 'development:native') {
+    return () => <DevBase loader={import('./starters/dev.native')} />;
+  }
+})();

@@ -5,6 +5,7 @@ import getSvgDimensions from './utils/getSvgDimensions';
 import getTargetScale from './utils/getTargetScale';
 import getTargetTranslate from './utils/getTargetTranslate';
 import getTargetDimensions from './utils/getTargetDimensions';
+import parseTemplate from './utils/parseTemplate';
 
 let _modules = {};
 let _cache = {};
@@ -37,8 +38,9 @@ export default class SvgBase extends Component {
   static propTypes = {
     children: PropTypes.func.isRequired,
     src: PropTypes.string.isRequired,
-    style: PropTypes.object,
+    params: PropTypes.object.isRequired,
     onDimensions: PropTypes.func.isRequired,
+    style: PropTypes.object,
     transformSrc: PropTypes.func,
     transformContent: PropTypes.func,
   };
@@ -115,7 +117,7 @@ export default class SvgBase extends Component {
   }
 
   render () {
-    const { style, children } = this.props;
+    const { style, params, children } = this.props;
     const { loading, error, content, originDimensions } = this.state;
 
     if (loading) {
@@ -123,6 +125,7 @@ export default class SvgBase extends Component {
     }
 
     const scale = getTargetScale(originDimensions, style);
+    const targetDimensions = getTargetDimensions(originDimensions, scale, style);
     const translate = getTargetTranslate(originDimensions, scale, style);
     this.handleDimensions(scale);
 
@@ -140,9 +143,10 @@ export default class SvgBase extends Component {
     return children({
       loading,
       error,
-      content,
+      content: parseTemplate(content, params),
       containerStyle,
       color: style.color,
+      targetDimensions,
     });
   }
 }
