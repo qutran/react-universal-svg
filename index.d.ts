@@ -1,10 +1,5 @@
 import * as React from 'react';
 
-export interface onDimensionsParams {
-  width: number;
-  height: number;
-}
-
 export interface SvgProps {
   /**
    * Svg source. 
@@ -18,10 +13,6 @@ export interface SvgProps {
    * Params injectable into svg template. Ex. { color: 'red' } will put value 'red' where ${color} string presents.
    */
   params: any;
-  /**
-   * onDimensions callback will trigger with computed real width and height of svg.
-   */
-  onDimensions: (params: onDimensionsParams) => null;
 }
 
 export interface ModulesSignature {

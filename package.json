@@ -36,7 +36,6 @@
     "prop-types": "^15.6.2",
     "react-native": "https://github.com/expo/react-native/archive/sdk-29.0.0.tar.gz",
     "react-primitives": "^0.6.0",
-    "react-scripts": "^1.1.5",
     "react-xml-parser": "^1.0.7"
   },
   "devDependencies": {
@@ -44,7 +43,8 @@
     "babel-plugin-minify-dead-code-elimination": "^0.4.3",
     "babel-plugin-transform-node-env-inline": "^0.4.3",
     "react": "^16.4.2",
-    "react-dom": "^16.4.2"
+    "react-dom": "^16.4.2",
+    "react-scripts": "^1.1.5"
   },
   "peerDependencies": {
     "react": "*",
