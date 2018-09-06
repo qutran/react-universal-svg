@@ -7,10 +7,10 @@ const getStopsCollector = (totalStops) => {
 
   return {
     upsert(stop) {
-      this.isFilled() ? this.update(stop) : this.push(stop);
+      this.isFilled() ? this.update(stop) : this.insert(stop);
       return this.isFilled();
     },
-    push(stop) {
+    insert(stop) {
       stops = [...stops, stop];
     },
     update(stop) {
