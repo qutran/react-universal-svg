@@ -1,10 +1,10 @@
 import React from 'react';
-import { Svg } from 'expo';
-import pick from 'object.pick';
 import XMLParser from 'react-xml-parser';
 import toCamelCase from 'camelcase';
-
-const ColorContext = React.createContext('#000');
+import Svg from '../../SvgComponent';
+import ColorContext from './ColorContext';
+import ParamsContext from './ParamsContext';
+import { omit, pick } from '..';
 
 const parser = new XMLParser();
 
@@ -40,33 +40,19 @@ const extendAttributesWithStyle = (attributes) => {
   }
 };
 
-const extendAllowedPropsByUndeclaratedKeys = (Component, allowedProps) => 
-  Component.displayName === 'Stop' ? [...allowedProps, 'offset'] : allowedProps;
-
 const getAllowedProps = (Component, attributes) => {
-  const keys = Component.propTypes &&
-    extendAllowedPropsByUndeclaratedKeys(Component, Object.keys(Component.propTypes));
+  const keys = Component.propTypes && Object.keys(Component.propTypes);
   return keys ? pick(normalizeKeys(attributes), keys) : attributes;
 }
 
-const getShouldColorChangeDetection = (props) => Object.values(props).indexOf('currentColor') >= 0;
-
-const applyColorFromContext = (props, color) => {
-  const result = {};
-  for (const [key, value] of Object.entries(props)) {
-    result[normalizeDataName(key)] = value === 'currentColor' ? color : value;
-  }
-
-  return result;
-};
-
 export const ColorProvider = ColorContext.Provider;
+export const ParamsProvider = ParamsContext.Provider;
 
 export default (content) => {
 
   const parsedSvg = parser.parseFromString(content).getElementsByTagName('svg')[0];
 
-  const renderChildren = (tree) => [tree.value, ...tree.children]
+  const renderChildren = (children, value) => [value, ...children]
     .filter((item) => !!item)
     .map((item, key) => typeof item === 'string' ? item : compileTree(item, key))
 
@@ -78,26 +64,22 @@ export default (content) => {
     }
 
     const props = getAllowedProps(Component, extendAttributesWithStyle(tree.attributes));
-    const shouldColorChangeDetection = getShouldColorChangeDetection(props);
-
-    if (shouldColorChangeDetection) {
-      return (
-        <ColorContext.Consumer key={key}>
-          {(color) => (
-            <Component {...applyColorFromContext(props, color)}>
-              {renderChildren(tree)}
-            </Component>
-          )}
-        </ColorContext.Consumer>
-      );
-    }
+    props.value = tree.value;
 
     return (
-      <Component {...props} key={key}>
-        {renderChildren(tree)}
-      </Component>
+      <ColorContext.Consumer {...props} key={key}>
+        {(props) => (
+          <ParamsContext.Consumer {...omit(props, ['children'])}>
+            {(props) => (
+              <Component {...omit(props, ['value', 'children'])} index={key}>
+                {renderChildren(tree.children, props.value)}
+              </Component>
+            )}
+          </ParamsContext.Consumer>
+        )}
+      </ColorContext.Consumer>
     );
   };
 
-  return compileTree(parsedSvg, 'svg');
+  return compileTree(parsedSvg, 'svg', );
 };

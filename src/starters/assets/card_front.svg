@@ -1,0 +1,1 @@
+<svg width="70" height="110" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient x1="50%" y1="8.373%" x2="50%" y2="97.857%" id="a1"><stop stop-color="#FAFAFA" offset="10%"/><stop stop-color="#F5F5F5" offset="80%"/></linearGradient></defs><rect stroke="#EEE" fill="url(#a1)" x=".5" y=".5" width="69" height="109" rx="6" fill-rule="evenodd"/><text y="20">${a}</text></svg>

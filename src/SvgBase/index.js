@@ -1,11 +1,11 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import omit from 'object.omit';
-import getSvgDimensions from './utils/getSvgDimensions';
-import getTargetScale from './utils/getTargetScale';
-import getTargetTranslate from './utils/getTargetTranslate';
-import getTargetDimensions from './utils/getTargetDimensions';
-import parseTemplate from './utils/parseTemplate';
+import { omit } from '../utils';
+import getSvgDimensions from '../utils/getSvgDimensions';
+import getTargetScale from '../utils/getTargetScale';
+import getTargetTranslate from '../utils/getTargetTranslate';
+import getTargetDimensions from '../utils/getTargetDimensions';
+import compileSvg, { ColorProvider, ParamsProvider } from '../utils/compileSvg';
 
 let _modules = {};
 let _cache = {};
@@ -38,17 +38,14 @@ export default class SvgBase extends Component {
   static propTypes = {
     children: PropTypes.func.isRequired,
     src: PropTypes.string.isRequired,
-    params: PropTypes.object.isRequired,
-    onDimensions: PropTypes.func.isRequired,
+    params: PropTypes.object,
     style: PropTypes.object,
     transformSrc: PropTypes.func,
-    transformContent: PropTypes.func,
   };
 
   static defaultProps = {
     style: {},
     transformSrc: IDENTITY,
-    transformContent: IDENTITY,
   };
 
   static addModules = (modules) => {
@@ -75,12 +72,12 @@ export default class SvgBase extends Component {
   }
 
   fromCacheOrFetch = async () => {
-    const { src, transformSrc, transformContent } = this.props;
+    const { src, transformSrc } = this.props;
     const assetSrc = transformSrc(src);
 
     if (!_cache[assetSrc]) {
       const response = await fetch(assetSrc);
-      const content = transformContent(await response.text());
+      const content = await response.text();
       _cache[assetSrc] = content;
     }
 
@@ -92,29 +89,13 @@ export default class SvgBase extends Component {
     try {
       const content = await this.fromCacheOrFetch();
       const originDimensions = await getSvgDimensions(content);
-      this.setState(setContent(content, originDimensions));
+      this.setState(setContent(compileSvg(content), originDimensions));
     } catch (exception) {
       this.setState(setError(exception));
     } finally {
       this.setState(setLoading(false));
     }
   };
-
-  handleDimensions(scale) {
-    const { style, onDimensions } = this.props;
-    const { originDimensions } = this.state;
-    const nextDimensions = getTargetDimensions(originDimensions, scale, style);
-    if (this._targetWidth !== nextDimensions.width || this._targetHeight !== nextDimensions.height) {
-      this._targetWidth = nextDimensions.width;
-      this._targetHeight = nextDimensions.height;
-      requestAnimationFrame(() => {
-        onDimensions({
-          width: this._targetWidth,
-          height: this._targetHeight,
-        });
-      });
-    }
-  }
 
   render () {
     const { style, params, children } = this.props;
@@ -127,7 +108,6 @@ export default class SvgBase extends Component {
     const scale = getTargetScale(originDimensions, style);
     const targetDimensions = getTargetDimensions(originDimensions, scale, style);
     const translate = getTargetTranslate(originDimensions, scale, style);
-    this.handleDimensions(scale);
 
     const containerStyle = omit({
       ...defaultStyles,
@@ -135,17 +115,24 @@ export default class SvgBase extends Component {
       ...originDimensions,
       transform: [
         ...translate,
-        ...(style.transform || {}),
+        ...(style.transform || []),
         { scale },
       ],
     }, ['color']);
 
+    const contentElement = (
+      <ColorProvider value={style.color}>
+        <ParamsProvider value={params}>
+          {content}
+        </ParamsProvider>
+      </ColorProvider>
+    );
+
     return children({
       loading,
       error,
-      content: parseTemplate(content, params),
+      content: contentElement,
       containerStyle,
-      color: style.color,
       targetDimensions,
     });
   }
