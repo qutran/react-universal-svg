@@ -1,6 +1,6 @@
 {
   "name": "@kotolis/react-universal-svg",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The flexible universal SVG component that renders with DOM and react-native (expo) in an identical way",
   "main": "lib",
   "types": "index.d.ts",
@@ -22,7 +22,9 @@
     "react-native",
     "expo",
     "primitives",
-    "svg"
+    "svg",
+    "universal",
+    "cross-platform"
   ],
   "author": "Dmitry Kutran <dmitrykutran@gmail.com> (https://github.com/kutran-dmitry)",
   "license": "MIT",
