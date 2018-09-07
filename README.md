@@ -39,7 +39,7 @@ const SampleComponentWithForSvg = () => (
 
 # What is this?
 This library attempts to propose SVG component loader with:
-  1. universal way of loading and usage SVG files on web and native (using [Expo](https://github.com/expo/expo)) platforms.
+  1. the universal way of loading and usage SVG files on the web and native platforms thanks for [Expo](https://github.com/expo/expo) and [react-primitives](https://github.com/lelandrichardson/react-primitives).
   2. possibility to apply parameters for interactions on the component level and making your SVG more flexible.
-  3. possibility to use ```currentColor``` as a value on the properties for native platforms, that doesn't provided by [Expo's](https://github.com/expo/expo) Svg component, that uses [react-native-svg](https://github.com/react-native-community/react-native-svg) package by default, and on the web platform, where doesn't allow to do this by DOM using ```<img src>``` way.
+  3. possibility to use ```currentColor``` as a value on the properties for native platforms, that doesn't provided by [Expo's](https://github.com/expo/expo) Svg component, and on the web platform, where doesn't allow to do this by DOM using ```<img src>``` way.
   4. determination of the correct SVG dimensions even if you are applying ```scale``` transformation on it.
