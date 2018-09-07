@@ -1,1 +1,1 @@
-import './starters/dev.dom';
+import './dev/dom';

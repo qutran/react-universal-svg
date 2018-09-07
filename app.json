@@ -2,7 +2,7 @@
   "expo": {
     "name": "react-universal-svg",
     "description": "This project is really great.",
-    "entryPoint": "./src/starters/dev.native/index.js",
+    "entryPoint": "./src/dev/native/index.js",
     "slug": "react-universal-svg",
     "privacy": "public",
     "sdkVersion": "29.0.0",
