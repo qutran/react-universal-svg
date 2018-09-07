@@ -9,7 +9,7 @@
     "start:native": "expo start",
     "start:native:ios": "expo start --ios",
     "start:native:android": "expo start --android",
-    "build": "rm -rf lib && NODE_ENV=production babel --presets react-app --plugins=transform-node-env-inline,minify-dead-code-elimination -d lib src --ignore src/starters && mv lib/index.lib.js lib/index.js",
+    "build": "rm -rf lib && NODE_ENV=production babel --presets react-app --plugins=transform-node-env-inline,minify-dead-code-elimination -d lib src --ignore src/dev && mv lib/index.lib.js lib/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "npm run build"
   },
