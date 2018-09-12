@@ -6,11 +6,11 @@ import getTargetScale from '../utils/getTargetScale';
 import getTargetTranslate from '../utils/getTargetTranslate';
 import getTargetDimensions from '../utils/getTargetDimensions';
 import compileSvg, { ColorProvider, ParamsProvider } from '../utils/compileSvg';
+import transformSrc from '../utils/transformSrc';
+import createFetch from '../utils/createFetch';
 
 let _modules = {};
 let _cache = {};
-
-const IDENTITY = (input) => input;
 
 const defaultStyles = {
   overflow: 'hidden',
@@ -40,12 +40,10 @@ export default class SvgBase extends Component {
     src: PropTypes.string.isRequired,
     params: PropTypes.object,
     style: PropTypes.object,
-    transformSrc: PropTypes.func,
   };
 
   static defaultProps = {
     style: {},
-    transformSrc: IDENTITY,
   };
 
   static addModules = (modules) => {
@@ -71,13 +69,21 @@ export default class SvgBase extends Component {
     }
   }
 
+  componentWillUnmount() {
+    if (typeof this._abortFetch === 'function') {
+      this._abortFetch();
+    }
+  }
+
   fromCacheOrFetch = async () => {
-    const { src, transformSrc } = this.props;
+    const { src } = this.props;
     const assetSrc = transformSrc(src);
 
     if (!_cache[assetSrc]) {
-      const response = await fetch(assetSrc);
-      const content = await response.text();
+      const { fetch, abort } = createFetch();
+      this._abortFetch = abort;
+      const content = await fetch(assetSrc);
+      this._abortFetch = null;
       _cache[assetSrc] = content;
     }
 
