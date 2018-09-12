@@ -2,13 +2,9 @@ import React from 'react';
 import { View } from 'react-primitives';
 import PropTypes from 'prop-types';
 import SvgBase from '../SvgBase';
-import transformSrc from '../utils/transformSrc';
 
 const UniversalSvg = (props) => (
-  <SvgBase
-    {...props}
-    transformSrc={transformSrc}
-  >
+  <SvgBase {...props}>
     {({ containerStyle, targetDimensions, loading, content }) => (
       loading ? <View /> : (
         <View style={targetDimensions}>
