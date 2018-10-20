@@ -67,8 +67,6 @@ export default (content) => {
       return null;
     }
 
-    console.log(tree.attributes);
-
     const props = getAllowedProps(Component, extendAttributesWithStyle(tree.attributes));
     props.value = tree.value;
 
