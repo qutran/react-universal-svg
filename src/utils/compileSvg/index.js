@@ -42,6 +42,10 @@ const extendAttributesWithStyle = (attributes) => {
 
 const getAllowedProps = (Component, attributes) => {
   const keys = Component.propTypes && Object.keys(Component.propTypes);
+  const xLinkHrefKey = Object.keys(attributes).find(key => key.toLowerCase() === 'xlink:href');
+  if (xLinkHrefKey) {
+    attributes.href = attributes[xLinkHrefKey];
+  }
   return keys ? pick(normalizeKeys(attributes), keys) : attributes;
 }
 
@@ -63,6 +67,8 @@ export default (content) => {
       return null;
     }
 
+    console.log(tree.attributes);
+
     const props = getAllowedProps(Component, extendAttributesWithStyle(tree.attributes));
     props.value = tree.value;
 
@@ -81,5 +87,5 @@ export default (content) => {
     );
   };
 
-  return compileTree(parsedSvg, 'svg', );
+  return compileTree(parsedSvg, 'svg');
 };

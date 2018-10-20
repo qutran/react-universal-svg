@@ -1,0 +1,54 @@
+{
+  "name": "@kotolis/react-universal-svg",
+  "version": "0.1.6",
+  "description": "The flexible universal SVG component that renders with DOM and react-native (expo) in an identical way",
+  "main": "lib",
+  "types": "index.d.ts",
+  "scripts": {
+    "start:dom": "react-scripts start",
+    "start:native": "expo start",
+    "start:native:ios": "expo start --ios",
+    "start:native:android": "expo start --android",
+    "build": "rm -rf lib && NODE_ENV=production babel --presets react-app --plugins=transform-node-env-inline,minify-dead-code-elimination -d lib src --ignore src/dev && mv lib/index.lib.js lib/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/kutran-dmitry/react-universal-svg.git"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "expo",
+    "primitives",
+    "svg",
+    "universal",
+    "cross-platform"
+  ],
+  "author": "Dmitry Kutran <dmitrykutran@gmail.com> (https://github.com/kutran-dmitry)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kutran-dmitry/react-universal-svg/issues"
+  },
+  "homepage": "https://github.com/kutran-dmitry/react-universal-svg#readme",
+  "dependencies": {
+    "camelcase": "^5.0.0",
+    "expo": "^29.0.0",
+    "prop-types": "^15.6.2",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-29.0.0.tar.gz",
+    "react-primitives": "^0.6.0",
+    "react-xml-parser": "^1.0.7"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-minify-dead-code-elimination": "^0.4.3",
+    "babel-plugin-transform-node-env-inline": "^0.4.3",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-scripts": "^1.1.5"
+  },
+  "peerDependencies": {
+    "react": "*"
+  }
+}

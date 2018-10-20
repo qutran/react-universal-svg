@@ -31,5 +31,6 @@ Svg.Text = createElement('Text', 'text');
 Svg.TextPath = createElement('TextPath', 'textPath');
 Svg.TSpan = createElement('TSpan', 'tspan');
 Svg.Use = createElement('Use', 'use');
+Svg.Mask = createElement('Mask', 'mask');
 
 export default Svg;
